@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from "react";
-import { C, FONT_MONO } from "../../theme.js";
+import { useTheme, C, FONT_MONO } from "../../theme.js";
 import { HEATMAP, HEAT_DAYS, dateLabel } from "../../data/mockData.js";
 import { heatColor } from "../../utils/colorUtils.js";
 import Panel from "../ui/Panel.jsx";
 import SectionHeader from "../ui/SectionHeader.jsx";
 
 export default function Heatmap() {
+  const { C } = useTheme();
   const [routeFilter, setRouteFilter] = useState("ALL");
   const [trendFilter, setTrendFilter] = useState("ALL");
   const [daysFilter, setDaysFilter] = useState(14);
@@ -324,17 +325,11 @@ export default function Heatmap() {
 
                       style={{
                         height: 26,
-
-                        background:
-                          heatColor(value),
-
+                        borderRadius: 4, // Smooth rounded heat cells
+                        background: heatColor(value, C),
                         display: "flex",
-
-                        alignItems:
-                          "center",
-
-                        justifyContent:
-                          "center",
+                        alignItems: "center",
+                        justifyContent: "center",
 
                         fontFamily:
                           FONT_MONO,
@@ -488,43 +483,29 @@ export default function Heatmap() {
    SELECT STYLE
 ========================= */
 
-const selectStyle = () => ({
-  padding: "7px 10px",
-
-  border:
-    `1px solid ${C.border}`,
-
-  background: C.bgAlt,
-
-  color: C.text,
-
+const selectStyle = (theme = C) => ({
+  padding: "7px 12px",
+  borderRadius: 8, // Rounded
+  border: `1px solid ${theme.border}`,
+  background: theme.bgAlt,
+  color: theme.text,
   fontFamily: FONT_MONO,
-
-  fontSize: 10.5,
-
+  fontSize: 11,
   outline: "none",
-
   cursor: "pointer",
 });
-
 
 /* =========================
    RESET BUTTON
 ========================= */
 
-const resetButton = () => ({
-  padding: "7px 10px",
-
-  border:
-    `1px solid ${C.border}`,
-
+const resetButton = (theme = C) => ({
+  padding: "7px 12px",
+  borderRadius: 8, // Rounded
+  border: `1px solid ${theme.border}`,
   background: "transparent",
-
-  color: C.textMuted,
-
+  color: theme.textMuted,
   fontFamily: FONT_MONO,
-
-  fontSize: 10.5,
-
+  fontSize: 11,
   cursor: "pointer",
 });

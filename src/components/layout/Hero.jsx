@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
-import { C, FONT_MONO } from "../../theme.js";
+import { useTheme, FONT_MONO } from "../../theme.js";
 import { APIX_LATEST, APIX_PREV_DAY, APIX_MOM, APIX_YOY, ROUTES, CARRIERS, rng } from "../../data/mockData.js";
 import Panel from "../ui/Panel.jsx";
 import Eyebrow from "../ui/Eyebrow.jsx";
@@ -8,17 +8,55 @@ import StatCard from "../ui/StatCard.jsx";
 import FlapBoard from "../flapboard/FlapBoard.jsx";
 
 export default function Hero() {
+  const { C } = useTheme();
   const dayUp = APIX_LATEST >= APIX_PREV_DAY;
   const DayIcon = dayUp ? ArrowUpRight : ArrowDownRight;
 
   return (
-    <div className="apix-hero" style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, marginBottom: 40, alignItems: "stretch" }}>
-      <Panel style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 10, minWidth: 260 }}>
+    <div
+      className="apix-hero"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "auto 1fr",
+        gap: 24,
+        marginBottom: 36,
+        alignItems: "stretch",
+      }}
+    >
+      <Panel
+        skeuo={true}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: 12,
+          minWidth: 300,
+        }}
+      >
         <Eyebrow>National APIx &middot; Base 2012=100</Eyebrow>
         <FlapBoard value={APIX_LATEST} />
-        <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: FONT_MONO, fontSize: 12.5, color: dayUp ? C.amber : C.teal }}>
-          <DayIcon size={14} />
-          {Math.abs(APIX_LATEST - APIX_PREV_DAY).toFixed(1)} pts vs previous day
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 4,
+              fontFamily: FONT_MONO,
+              fontSize: 12,
+              fontWeight: 700,
+              color: dayUp ? C.blue : C.teal,
+              background: dayUp ? C.blueSoft : C.tealSoft,
+              padding: "4px 10px",
+              borderRadius: 9999,
+              boxShadow: C.skeuoButton,
+            }}
+          >
+            <DayIcon size={13} strokeWidth={2} style={{ strokeLinecap: "round", strokeLinejoin: "round" }} />
+            {Math.abs(APIX_LATEST - APIX_PREV_DAY).toFixed(1)} pts
+          </span>
+          <span style={{ fontFamily: FONT_MONO, fontSize: 11.5, color: C.textMuted }}>
+            vs previous day
+          </span>
         </div>
       </Panel>
 
