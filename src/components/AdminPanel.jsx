@@ -15,7 +15,7 @@ import {
   Users,
 } from "lucide-react";
 
-import { C, FONT_DISPLAY, FONT_MONO, FONT_UI } from "../theme.js";
+import { useTheme, C, FONT_DISPLAY, FONT_MONO, FONT_UI } from "../theme.js";
 
 import {
   CARRIERS,
@@ -40,8 +40,8 @@ const initialRoutes = ROUTES.map((route) => ({
    ADMIN PANEL
 ========================= */
 
-export default function AdminPanel() {
-
+export default function AdminPanel({ onBack }) {
+  const { C } = useTheme();
   const [activeTab, setActiveTab] = useState("overview");
 
   const [routes, setRoutes] = useState(initialRoutes);
@@ -182,8 +182,11 @@ export default function AdminPanel() {
   ========================= */
 
   const goBackToWebsite = () => {
-
-    window.location.href = "/";
+    if (onBack) {
+      onBack();
+    } else {
+      window.location.href = "/";
+    }
   };
 
 
@@ -1461,113 +1464,69 @@ const tdStyle = (mono = false) => ({
    BUTTON STYLES
 ========================= */
 
-const iconButton = () => ({
-
+const iconButton = (theme = C) => ({
   width: 38,
-
   height: 38,
-
   display: "inline-flex",
-
   alignItems: "center",
-
   justifyContent: "center",
-
-  border:
-    `1px solid ${C.border}`,
-
-  background: C.panel,
-
-  color: C.text,
-
+  border: `1px solid ${theme.border}`,
+  borderRadius: 10, // Smooth rounded icon button
+  background: theme.panel,
+  color: theme.text,
   cursor: "pointer",
-
+  transition: "all 0.15s ease",
 });
 
-
-const primaryButton = () => ({
-
+const primaryButton = (theme = C) => ({
   display: "inline-flex",
-
   alignItems: "center",
-
   gap: 7,
-
-  border:
-    `1px solid ${C.amber}`,
-
-  background: C.amber,
-
-  color: C.bg,
-
-  padding: "9px 13px",
-
+  border: `1px solid ${theme.amber}`,
+  borderRadius: 8, // Smooth rounded button
+  background: theme.amber,
+  color: "#FFFFFF",
+  padding: "9px 15px",
   fontFamily: FONT_MONO,
-
   fontSize: 11.5,
-
+  fontWeight: 600,
   cursor: "pointer",
-
+  transition: "all 0.15s ease",
 });
 
-
-const secondaryButton = () => ({
-
-  border:
-    `1px solid ${C.border}`,
-
+const secondaryButton = (theme = C) => ({
+  border: `1px solid ${theme.border}`,
+  borderRadius: 8, // Smooth rounded button
   background: "transparent",
-
-  color: C.textMuted,
-
-  padding: "9px 13px",
-
+  color: theme.textMuted,
+  padding: "9px 15px",
   fontFamily: FONT_MONO,
-
   fontSize: 11.5,
-
   cursor: "pointer",
-
+  transition: "all 0.15s ease",
 });
 
-
-const dangerButton = () => ({
-
-  border:
-    `1px solid ${C.rust}`,
-
+const dangerButton = (theme = C) => ({
+  border: `1px solid ${theme.rust}`,
+  borderRadius: 8, // Smooth rounded button
   background: "transparent",
-
-  color: C.rust,
-
+  color: theme.rust,
   padding: 7,
-
   cursor: "pointer",
-
+  transition: "all 0.15s ease",
 });
 
-
-const inputStyle = () => ({
-
+const inputStyle = (theme = C) => ({
   width: "100%",
-
   marginTop: 6,
-
-  padding: "10px 11px",
-
-  border:
-    `1px solid ${C.border}`,
-
-  background: C.bgAlt,
-
-  color: C.text,
-
+  padding: "10px 12px",
+  border: `1px solid ${theme.border}`,
+  borderRadius: 8, // Smooth rounded inputs
+  background: theme.bgAlt,
+  color: theme.text,
   outline: "none",
-
   fontFamily: FONT_MONO,
-
   fontSize: 12,
-
 });
 
 
